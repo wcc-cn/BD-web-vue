@@ -40,9 +40,11 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
-import { useUserStore } from '@/store/user'
+import { login } from '@/api/user'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 
-const userStore = useUserStore()
+const router = useRouter();
 
 const form = reactive({
   username: '',
@@ -50,7 +52,21 @@ const form = reactive({
 })
 
 const submitForm = () => {
-  console.log("登录参数：", form)
+  login(form)
+    .then((res: any) => {
+      if(res.data.code === 200){
+        ElMessage({message: '登录成功', type: 'success', plain: true,})
+        localStorage.setItem('userInfo', JSON.stringify(res.data.data))
+        router.push('/home')
+      }
+      else{
+        ElMessage({message: '登录失败', type: 'error', plain: true, })
+      }
+    })
+    .catch((err: any) => {
+      console.log("登录失败：", err)
+      ElMessage({message: '登录失败', type: 'error', plain: true,})
+    })
 }
 
 const resetForm = () => {
