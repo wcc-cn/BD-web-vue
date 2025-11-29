@@ -34,6 +34,10 @@
         <span>用户管理</span>
       </el-menu-item>
       <el-menu-item index="6">
+        <el-icon><VideoPlay /></el-icon>
+        <span>视频管理</span>
+      </el-menu-item>
+      <el-menu-item index="7">
         <el-icon><Setting /></el-icon>
         <span>系统设置</span>
       </el-menu-item>
@@ -44,7 +48,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { House, VideoCamera, DataAnalysis, Warning, Setting, User } from '@element-plus/icons-vue'
+import { House, VideoCamera, DataAnalysis, Warning, Setting, User, VideoPlay } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -58,7 +62,8 @@ const activeMenu = computed(() => {
   if (path.includes('/analysis')) return '3'
   if (path.includes('/alert')) return '4'
   if (path.includes('/user')) return '5'
-  if (path.includes('/settings')) return '6'
+  if (path.includes('/video')) return '6'
+  if (path.includes('/settings')) return '7'
   return '1'
 })
 
@@ -69,7 +74,8 @@ const handleMenuSelect = (index: string) => {
     '3': '/home/analysis',
     '4': '/home/alert',
     '5': '/home/user',
-    '6': '/home/settings'
+    '6': '/home/video',
+    '7': '/home/settings'
   }
   router.push(routeMap[index] as string)
 }

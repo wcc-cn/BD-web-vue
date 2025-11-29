@@ -49,7 +49,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column  align="center">
+            <el-table-column label="操作"  align="center">
                 <template #default="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">
                         编辑

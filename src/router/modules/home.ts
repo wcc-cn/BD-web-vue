@@ -40,6 +40,12 @@ const homeRouter:RouteRecordRaw = {
       name: 'Settings',
       component: () => import('@/pages/home/settings.vue'),
       meta: { title: '系统设置' }
+    },
+    {
+      path: 'video',
+      name: 'video',
+      component: () => import('@/pages/home/video.vue'),
+      meta: { title: '视频管理' }
     }
   ]
 }
