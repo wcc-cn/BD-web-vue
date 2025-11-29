@@ -8,7 +8,7 @@
 
         <el-form-item>
           <el-input
-            v-model="form.username"
+            v-model="form.account"
             placeholder="请输入账号"
             :prefix-icon="User"
           />
@@ -47,7 +47,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter();
 
 const form = reactive({
-  username: '',
+  account: '',
   password: '',
 })
 
@@ -70,7 +70,7 @@ const submitForm = () => {
 }
 
 const resetForm = () => {
-  form.username = ''
+  form.account = ''
   form.password = ''
 }
 </script>

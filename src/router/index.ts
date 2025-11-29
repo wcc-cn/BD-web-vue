@@ -5,7 +5,10 @@ import loginRouter from './modules/login'
 
 
 const routes:RouteRecordRaw[] = [
-    { path: '/', name:"home", redirect:'/login',
+    { 
+        path: '/', 
+        name:"home", 
+        redirect:'/login',
         children:[
             homeRoute,
             loginRouter

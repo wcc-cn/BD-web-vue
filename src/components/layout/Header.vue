@@ -7,7 +7,7 @@
       </el-breadcrumb>
     </div>
     <div class="header-right">
-      <el-icon class="header-icon"><Bell /></el-icon>
+      <el-icon class="header-icon"><Bell @click="handleBellClick" /></el-icon>
       <el-dropdown>
         <div class="user-info">
           <el-avatar :size="35" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
@@ -31,7 +31,6 @@ import { computed, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { Expand, Bell, ArrowDown } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-
 const router = useRouter()
 const route = useRoute()
 const userInfo = ref(JSON.parse(localStorage.getItem('userInfo') || "{'username':'未知'}"))
@@ -54,7 +53,7 @@ const currentPageName = computed(() => {
 })
 
 // 定义 emit
-const emit = defineEmits(['toggle-sidebar'])
+const emit = defineEmits(['toggle-sidebar', 'click-dialog'])
 
 const handleToggleSidebar = () => {
   emit('toggle-sidebar')
@@ -65,6 +64,10 @@ const handleLogout = () => {
   localStorage.removeItem('userInfo');
   ElMessage({message: '已退出登录', type: 'primary', plain: true,})
   console.log('已退出登录');
+}
+
+const handleBellClick = () => {
+  emit('click-dialog')
 }
 </script>
 

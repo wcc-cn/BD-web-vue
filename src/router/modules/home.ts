@@ -30,6 +30,12 @@ const homeRouter:RouteRecordRaw = {
       meta: { title: '告警记录' }
     },
     {
+      path: 'user',
+      name: 'User',
+      component: () => import('@/pages/home/user.vue'),
+      meta: { title: '用户管理' }
+    },
+    {
       path: 'settings',
       name: 'Settings',
       component: () => import('@/pages/home/settings.vue'),
