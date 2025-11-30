@@ -11,3 +11,7 @@ export const getVideoPage = (data: any) => {
 export const delete_video = (data: any) => {
   return http.del(`/video/delete/${data.id}`, data);
 };
+
+export const detectVideo = (data: any) => {
+  return http.post("/video/detect_video", data);
+};

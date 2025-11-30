@@ -80,17 +80,41 @@
             </template>
         </el-dialog>
 
-        <el-dialog
-            v-model="playDialogVisible"
-            title="播放视频"
-            width="800px"
-            >
-            <video
-                :src="videoUrl"
-                controls
-                autoplay
-                style="width:100%; max-height: 600px; background: #000;"
-            ></video>
+        <el-dialog v-model="playDialogVisible" title="本地视频" width="1000px">
+            <el-row :gutter="20" style="align-items: stretch;">
+                <el-col :span="17">
+                    <div ref="videoContainer" style="width: 100%; display: inline-block;">
+                        <video
+                            :src="videoUrl"
+                            ref="videoRef"
+                            controls
+                            autoplay
+                            style="width:100%; background: #000;"
+                        ></video>
+                    </div>
+                </el-col>
+                <el-col :span="7" style="display: flex;">
+                    <el-card style="flex: 1;">
+                        <div style="margin-bottom: 10px;">
+                            文件名: <span>{{ videoInfo.name }}</span>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            视频格式: <span>{{ videoInfo.format }}</span>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            视频帧率: <span>{{ videoInfo.fps }}</span>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            视频类型: <span>{{ videoInfo.type }}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <el-button>解析视频</el-button>
+                            <el-button type="primary" @click="handleModelRecognition">模型识别</el-button>
+                        </div> 
+                    </el-card>
+                </el-col>
+            </el-row>
+            
         </el-dialog>
 
     </el-card>
@@ -98,15 +122,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch  } from 'vue'
+import { ref, watch, reactive  } from 'vue'
 import { UploadFilled } from '@element-plus/icons-vue'
 import type { UploadFile, UploadFiles, ComponentSize } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { addVideo, getVideoPage, delete_video } from '@/api/video'
+import { addVideo, getVideoPage, delete_video, detectVideo} from '@/api/video'
 
 const dialogVisible = ref(false)
 const playDialogVisible = ref(false)
+const videoRef = ref<HTMLVideoElement>()
 const videoUrl = ref('')
+const videoInfo = reactive({
+  name: '',
+  format: 'mp4',
+  fps: '25',
+  type: '行为识别'
+})
 
 const videoList = ref<string[]>([])
 const uploadRef = ref()
@@ -120,6 +151,15 @@ const total = ref(10)
 watch(dialogVisible, (newVal, oldVal) => {
   if (!newVal) {
     autoClearFiles()
+  } 
+})
+
+watch(playDialogVisible, (newVal, oldVal) => {
+  if (!newVal) {
+    if (videoRef.value) {
+      videoRef.value.pause()
+      videoRef.value.currentTime = 0
+    }
   } 
 })
 
@@ -155,6 +195,7 @@ const handleCurrentChange = (val: number) => {
 
 const handlePlay = (index: number, row: any) => {
     videoUrl.value = "http://localhost:8081/video/" + row.name
+    videoInfo.name = row.name
     playDialogVisible.value = true
 }
 
@@ -191,6 +232,16 @@ const handleAddVideo = () => {
 }
 const autoClearFiles = () => {
     uploadRef.value.clearFiles()
+}
+
+const handleModelRecognition = () => {
+    detectVideo({name: videoInfo.name}).then((res: any) => {
+        if (res.data.code === 200) {
+            ElMessage({message: '模型识别成功!', type: 'success', plain: true,})
+        } else {
+            ElMessage({message: '模型识别失败!', type: 'error', plain: true,})
+        }
+    })
 }
 
 

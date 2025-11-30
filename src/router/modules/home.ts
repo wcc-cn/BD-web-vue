@@ -46,6 +46,12 @@ const homeRouter:RouteRecordRaw = {
       name: 'video',
       component: () => import('@/pages/home/video.vue'),
       meta: { title: '视频管理' }
+    },
+    {
+      path: 'detectResult',
+      name: 'detectResult',
+      component: () => import('@/pages/home/detectResult.vue'),
+      meta: { title: '识别结果' }
     }
   ]
 }

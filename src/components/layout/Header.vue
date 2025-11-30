@@ -47,6 +47,7 @@ const routeNameMap: Record<string, string> = {
   '/home/settings': '系统设置',
   '/home/user': '用户管理',
   '/home/video': '视频管理',
+  '/home/detetctResult': '识别结果',
 }
 // 实时计算当前页面名称
 const currentPageName = computed(() => {

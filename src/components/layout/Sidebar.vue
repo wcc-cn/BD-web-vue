@@ -38,6 +38,10 @@
         <span>视频管理</span>
       </el-menu-item>
       <el-menu-item index="7">
+        <el-icon><DataAnalysis /></el-icon>
+        <span>识别结果</span>
+      </el-menu-item>
+      <el-menu-item index="8">
         <el-icon><Setting /></el-icon>
         <span>系统设置</span>
       </el-menu-item>
@@ -63,7 +67,8 @@ const activeMenu = computed(() => {
   if (path.includes('/alert')) return '4'
   if (path.includes('/user')) return '5'
   if (path.includes('/video')) return '6'
-  if (path.includes('/settings')) return '7'
+  if (path.includes('/detetctResult')) return '7'
+  if (path.includes('/settings')) return '8'
   return '1'
 })
 
@@ -75,7 +80,8 @@ const handleMenuSelect = (index: string) => {
     '4': '/home/alert',
     '5': '/home/user',
     '6': '/home/video',
-    '7': '/home/settings'
+    '7': '/home/detectResult',
+    '8': '/home/settings'
   }
   router.push(routeMap[index] as string)
 }
