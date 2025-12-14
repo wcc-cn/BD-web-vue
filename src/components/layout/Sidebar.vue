@@ -33,14 +33,20 @@
         <el-icon><User /></el-icon>
         <span>用户管理</span>
       </el-menu-item>
-      <el-menu-item index="6">
-        <el-icon><VideoPlay /></el-icon>
-        <span>视频管理</span>
-      </el-menu-item>
-      <el-menu-item index="7">
-        <el-icon><DataAnalysis /></el-icon>
-        <span>识别结果</span>
-      </el-menu-item>
+      <el-sub-menu index="6">
+        <template #title>
+          <el-icon><Folder /></el-icon>
+          <span>本地视频</span>
+        </template>
+        <el-menu-item index="6-1">
+          <el-icon><VideoPlay /></el-icon>
+          <span>视频管理</span>
+        </el-menu-item>
+        <el-menu-item index="6-2">
+          <el-icon><DataAnalysis /></el-icon>
+          <span>识别结果</span>
+        </el-menu-item>
+      </el-sub-menu>
       <el-menu-item index="8">
         <el-icon><Setting /></el-icon>
         <span>系统设置</span>
@@ -52,7 +58,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { House, VideoCamera, DataAnalysis, Warning, Setting, User, VideoPlay } from '@element-plus/icons-vue'
+import { House, VideoCamera, DataAnalysis, Warning, Setting, User, VideoPlay, Folder } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -66,8 +72,8 @@ const activeMenu = computed(() => {
   if (path.includes('/analysis')) return '3'
   if (path.includes('/alert')) return '4'
   if (path.includes('/user')) return '5'
-  if (path.includes('/video')) return '6'
-  if (path.includes('/detetctResult')) return '7'
+  if (path.includes('/video')) return '6-1'
+  if (path.includes('/detectResult')) return '6-2'
   if (path.includes('/settings')) return '8'
   return '1'
 })
@@ -79,8 +85,8 @@ const handleMenuSelect = (index: string) => {
     '3': '/home/analysis',
     '4': '/home/alert',
     '5': '/home/user',
-    '6': '/home/video',
-    '7': '/home/detectResult',
+    '6-1': '/home/video',
+    '6-2': '/home/detectResult',
     '8': '/home/settings'
   }
   router.push(routeMap[index] as string)
